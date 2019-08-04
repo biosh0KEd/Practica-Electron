@@ -1,0 +1,15 @@
+{
+  "name": "practicaelectron",
+  "version": "1.0.0",
+  "description": "Aplicacion de electron para visualizacion de imagenes",
+  "main": "index.js",
+  "scripts": {
+    "dev": "electron index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^6.0.0"
+  }
+}
