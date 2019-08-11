@@ -11,15 +11,35 @@
 <body>
   <div class="window">
     <div class="window-content">
-    <div class="pane-group">
-      <div class="pane">
-        <p>Hola soy una aplicación de electron</p>
-        <p id="mensaje"></p>
+      <div class="pane-group">
+        <div class="pane-sm sidebar">
+          <ul class="list-group">
+            <li class="list-group-header">
+              <input class="form-control" type="text" placeholder="Search for someone">
+            </li>
+            <li class="list-group-item">
+              <img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
+              <div class="media-body">
+                <strong>imagen.png</strong>
+                <p>tamño</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="pane">
+          <div class="toolbar-actions">
+            <div class="btn-group">
+              <button class="btn btn-default">
+                <span class="icon icon-home"></span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="pane">...</div>
-      <div class="pane">...</div>
-    </div>
     </div>
   </div>
+  <footer class="toolbar toolbar-footer">
+    <h1 class="title">Footer</h1>
+  </footer>
 </body>
 </html>
