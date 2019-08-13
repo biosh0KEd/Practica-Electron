@@ -22,7 +22,10 @@ app.on('ready', () => {
     title: 'Hola mundo',
     center: true,
     maximizable: false,
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   // Esperamos a que el contenido este listo para mostrarse y lo mostramos
