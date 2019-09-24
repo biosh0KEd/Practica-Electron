@@ -36,24 +36,25 @@ function searchImageEvent() {
 
   searchBox.addEventListener('keyup', function() {
     const regex = new RegExp(this.value.toLowerCase(), 'gi')
+    const thumbs = document.querySelectorAll('li.list-group-item img')
 
     if (this.value.length > 0) {
-      const thumbs = document.querySelectorAll('li.list-group-item img')
-
       for (let i = 0, length2 = thumbs.length; i < length2; i++) {
         const fileURL = url.parse(thumbs[i].src)
         const fileName = path.basename(fileURL.pathname)
 
         if (fileName.match(regex)) {
           thumbs[i].parentNode.classList.remove('hidden')
+          selectFirstImage()
         } else {
           thumbs[i].parentNode.classList.add('hidden')
         }
-
       }
-
+    } else {
+      for (let i = 0, length2 = thumbs.length; i < length2; i++) {
+        thumbs[i].parentNode.classList.remove('hidden')
+      }
       selectFirstImage()
-
     }
   })
 }
