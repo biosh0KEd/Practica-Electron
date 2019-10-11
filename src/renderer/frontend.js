@@ -1,13 +1,23 @@
 const url = require('url')
 const path = require('path')
 const applyFilter = require('./filters')
+const { setIpc, sendIpc } = require('./ipcRendererEvents')
+
 
 window.addEventListener('load', () => {
+  setIpc()
   addImagesEvents()
   searchImageEvent()
   selectEvent()
+  openDirectory()
 })
 
+function openDirectory () {
+  const openDirectory = document.getElementById('open-directory')
+  openDirectory.addEventListener('click', () => {
+    sendIpc()
+  })
+}
 
 function addImagesEvents() {
   // Selecciona todos los li con la clase list-group-item

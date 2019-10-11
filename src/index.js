@@ -1,7 +1,7 @@
 'use strict'
 
 // Instaciando los objetos app y BrowserWindow
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const electronDebug = require('electron-debug')
 
 // console.dir(app)
@@ -49,4 +49,10 @@ app.on('ready', () => {
   // Cargando en nuestra ventana un sitio externo
   win.loadURL(`file://${__dirname}/renderer/index.html`)
   electronDebug({ showDevTools: true })
+})
+
+
+ipcMain.on('ping', (event, arg) => {
+  console.log(`Se recibio ping - ${arg}`)
+  event.sender.send('pong', new Date())
 })
