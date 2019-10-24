@@ -1,8 +1,10 @@
 'use strict'
 
 // Instaciando los objetos app y BrowserWindow
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const electronDebug = require('electron-debug')
+
+let win 
 
 // console.dir(app)
 
@@ -15,7 +17,7 @@ app.on('before-quit', () => {
 // Ejecutando ordenes cuando la aplicación esta lista
 app.on('ready', () => {
   // Creando una nueva ventana
-  let win = new BrowserWindow({
+  win = new BrowserWindow({
     // Propiedades de la ventana
     width: 800,
     height: 600,
@@ -52,7 +54,14 @@ app.on('ready', () => {
 })
 
 
-ipcMain.on('ping', (event, arg) => {
-  console.log(`Se recibio ping - ${arg}`)
-  event.sender.send('pong', new Date())
+ipcMain.on('open-directory', (event) => {
+  dialog.showOpenDialog(win, {
+    title: 'Seleccione la nueva ubicacion',
+    buttonLabel: 'Abrir ubicacion',
+    properties: ['openDirectory']
+  },
+  (dir) => {
+    console.log(dir)
+  }
+  )
 })
