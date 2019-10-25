@@ -75,6 +75,9 @@ ipcMain.on('open-directory', (event) => {
       //Recibe un arreglo con el directorio 0 y un callback
       //con un error y los archivos
       fs.readdir(dir[0], function (err, files) {
+        //si ocurre un error lo lanzamos
+        if (err) throw err
+
         //Recorremos el arreglo de archivos files que sacamos de la ubicacion
         for(var i = 0, length1 = files.length; i < length1; i++) {
           //Metemos al arreglo images los archivos que son imagenes
@@ -89,7 +92,10 @@ ipcMain.on('open-directory', (event) => {
             images.push({filename: files[i], src: `file://${imageFile}`, size: size});
           }
         }
-        console.log(images)
+        //Enviamos las imagenes al proceso de renderizado
+        //Indicamos el evento al que se lo vamos a mandar
+        //Y el argumento que enviaremos
+        event.sender.send('load-images', images)
       })
     }
   }
