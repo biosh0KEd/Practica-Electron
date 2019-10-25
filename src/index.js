@@ -3,6 +3,10 @@
 // Instaciando los objetos app y BrowserWindow
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const electronDebug = require('electron-debug')
+const fs = require('fs')
+const isImage = require('is-image')
+const path = require('path')
+const filesize = require('filesize')
 
 let win 
 
@@ -53,15 +57,41 @@ app.on('ready', () => {
   electronDebug({ showDevTools: true })
 })
 
-
+//Es lo que haremos cuando suceda el evento open directory
 ipcMain.on('open-directory', (event) => {
+  //Abrimos una ventana de dialogo
+  //Recibe el objeto y las propiedades
   dialog.showOpenDialog(win, {
     title: 'Seleccione la nueva ubicacion',
     buttonLabel: 'Abrir ubicacion',
     properties: ['openDirectory']
   },
   (dir) => {
-    console.log(dir)
+    //Sera un arreglo donde almacenaremos cada una de las imagenes
+    const images = []
+    //Preguntamos si dir es valido
+    if (dir) {
+      //Lo leemos con el modulo fs
+      //Recibe un arreglo con el directorio 0 y un callback
+      //con un error y los archivos
+      fs.readdir(dir[0], function (err, files) {
+        //Recorremos el arreglo de archivos files que sacamos de la ubicacion
+        for(var i = 0, length1 = files.length; i < length1; i++) {
+          //Metemos al arreglo images los archivos que son imagenes
+          if (isImage(files[i])){
+            //Obtenermos la ruta de la imagen, con el directorio y el archivo
+            let imageFile = path.join(dir[0], files[i])
+            //Obtenemos el tamaño de la imagen con el modulo filesize
+            //Obtenemos los stats que es informacion del archivo
+            let stats = fs.statSync(imageFile)
+            let size = filesize(stats.size, {round: 0})
+            //Y metemos un objeto con los datos que nos interezan al arreglo
+            images.push({filename: files[i], src: `file://${imageFile}`, size: size});
+          }
+        }
+        console.log(images)
+      })
+    }
   }
   )
 })
