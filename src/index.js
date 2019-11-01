@@ -101,3 +101,23 @@ ipcMain.on('open-directory', (event) => {
   }
   )
 })
+
+//Al suceder el evento en el primer parametro
+//Ejecutamos la funcion del segundo con el evento en si como parametro
+ipcMain.on('open-save-dialog', (event, ext) => {
+  //Mostramos la ventana para guardar la imagen
+  dialog.showSaveDialog(win, {
+    title: 'Guardar imagen modificada',
+    buttonLabel: 'Guardar imagen',
+    //Definimos que tipo de archivo el usuario puede guardar
+    filters: [{
+      name: 'Images',
+      extensions: [ext.substr(1)]
+    }]
+  }, (file => {
+    if (file) {
+      //Hacemos un evento para cuminicarle al proceso de renderizado que se va a guardar la imagen
+      event.sender.send('save-image', file)
+    }
+  }))
+})

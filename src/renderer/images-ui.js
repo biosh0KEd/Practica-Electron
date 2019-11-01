@@ -29,8 +29,11 @@ function changeImage(node) {
     // Agregamos la clase selected al li que recivimos por parametro que sera el que esta presionado acualmente
     node.classList.add('selected');
 
+    const image = document.getElementById('image-displayed')
     // Seleccionamos la imagen que esta siendo mostrada y cambia su fuente por la imagen seleccionada
-    document.getElementById('image-displayed').src = node.querySelector('img').src
+    image.src = node.querySelector('img').src
+    //Creamos la variable original en data set para no perder la referencia a la imagen cuando apliquemos un filtro
+    image.dataset.original = image.src
   } else {
     document.getElementById('image-displayed').src = ''
   }
