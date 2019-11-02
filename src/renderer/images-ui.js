@@ -1,6 +1,6 @@
 const url = require('url')
 const path = require('path')
-const applyFilter = require('./filters')
+const { applyFilter } = require('./filters')
 
 
 //Hacemos una funcion para agregar los eventos de seleccion y mostrado
@@ -34,6 +34,8 @@ function changeImage(node) {
     image.src = node.querySelector('img').src
     //Creamos la variable original en data set para no perder la referencia a la imagen cuando apliquemos un filtro
     image.dataset.original = image.src
+    //Poner el filtro en normal
+    document.getElementById('filters').selectedIndex = 0
   } else {
     document.getElementById('image-displayed').src = ''
   }

@@ -7,6 +7,7 @@ const {
   loadImages
 } = require('./images-ui')
 const path = require('path')
+const { saveImage } = require('./filters')
 
 //configura todos los eventos a escuchar del lado del proceso de renderizado
 function setIpc() { 
@@ -20,7 +21,7 @@ function setIpc() {
   })
 
   ipcRenderer.on('save-image', (event, file) => {
-    console.log(file)
+    saveImage(file)
   })
 }
 
