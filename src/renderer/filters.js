@@ -11,13 +11,11 @@ function applyFilter(filter, currentImage) {
 
 //Funcion para filtrar la direccion de la imagen con filtro
 //Y solo obtener lo que esta despues de Base64,
-function saveImage (fileName) {
+function saveImage (fileName, callback) {
   let fileSrc = document.getElementById('image-displayed').src
   //Filtramos la informacion de la cabecera con una expresion regular
   fileSrc = fileSrc.replace(/^data:([A-Za-z-+/]+;base64,)/, '')
-  fs.writeFile(fileName, fileSrc, 'base64', (err) => {
-    if (err) console.log(err)
-  })
+  fs.writeFile(fileName, fileSrc, 'base64', callback)
 }
 
 module.exports = {

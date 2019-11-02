@@ -21,7 +21,11 @@ function setIpc() {
   })
 
   ipcRenderer.on('save-image', (event, file) => {
-    saveImage(file)
+    saveImage(file, (err) => {
+      if (err) showDialog('error', 'Platzipics', err.message)
+
+      showDialog('info', 'Platzipics', 'La imagen fue guardada')
+    })
   })
 }
 
@@ -35,6 +39,11 @@ function saveFile() {
   const image = document.getElementById('image-displayed').dataset.original
   const ext = path.extname(image)
   ipcRenderer.send('open-save-dialog', ext)
+}
+
+//Enviamos el evento para mostrar un dialogo al proceso principal
+function showDialog (type, title, msg) {
+  ipcRenderer.send('show-dialog', {type: type, title: title, message: msg})
 }
 
 //Exportamos el modulo con las funciones para usarlo en otro archivo
